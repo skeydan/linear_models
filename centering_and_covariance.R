@@ -23,11 +23,16 @@ lm(mpg ~ hp + wt, data = mtcars)
 
 n = nrow(x)
 I = diag(rep(1, n))
-H = matrix(1, n, n) / n
 
 # I - H is the centering matrix
+# shortcut way
+H = matrix(1, n, n) / n
+# do it literally as in formula
 # I − 1(1_t 1)_inv 1_t y
 # = I - 1/n I
+#ones = rep(1,n)
+#H = ones %*% solve(t(ones) %*% ones) %*% t(ones)
+
 # center the columns
 xt = (I - H) %*% x
 
@@ -44,6 +49,7 @@ apply(xt2, 2, mean)
 #############################################################
 
 # covariance matrix: 1/(n-1) * <centered t(x)> * <centered x>
+# I is idempotent
 t(x) %*% (I - H) %*% x / (n - 1)
 
 # check with var()
