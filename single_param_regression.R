@@ -23,3 +23,12 @@ coef(lm(yc ~ xc - 1))
 
 # correlation coefficient formula for centered matrices
 cor(x, y) * sd(y) / sd(x)
+
+# regression with intercept
+beta1 = cor(x, y) * sd(y) / sd(x)
+beta0 = mean(y) - beta1 * mean(x)
+c(beta0, beta1)
+# versus estimate with lm
+coef(lm(y ~ x))
+# beta1 = coefficient of centered regression through the origin
+sum(yc * xc) / sum(xc^2)
